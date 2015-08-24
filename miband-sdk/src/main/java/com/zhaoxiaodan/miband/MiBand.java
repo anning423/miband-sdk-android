@@ -31,13 +31,31 @@ public class MiBand
 	}
 	
 	/**
+	 * 连接指定设备
+	 * 
+	 * @param callback
+	 */
+	public void connect(BluetoothDevice device, DeviceStateListener callback)
+	{
+		this.io.connect(context, device, callback);
+	}
+
+	/**
 	 * 会自动搜索android设备附近的手环, 自动连接, 因为手上只有一个手环, 当前只支持搜索到一个手环的情况;
 	 * 
 	 * @param callback
 	 */
-	public void connect(final ActionCallback callback)
+	public void connect(final DeviceStateListener callback)
 	{
 		this.io.connect(context, callback);
+	}
+	
+	/**
+	 * 断开设备
+	 */
+	public void disconnect()
+	{
+		this.io.disconnect();
 	}
 	
 	/**

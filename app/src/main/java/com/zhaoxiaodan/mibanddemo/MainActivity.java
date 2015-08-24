@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zhaoxiaodan.miband.ActionCallback;
+import com.zhaoxiaodan.miband.DeviceStateListener;
 import com.zhaoxiaodan.miband.MiBand;
 import com.zhaoxiaodan.miband.NotifyListener;
 import com.zhaoxiaodan.miband.RealtimeStepsNotifyListener;
@@ -52,6 +53,7 @@ public class MainActivity extends Activity
 	
 	static final String[]		BUTTONS	= new String[] {
 			"Connect",
+			"Disconnect",
 			"setUserInfo",
 			"pair",
 			"read_rssi",
@@ -95,23 +97,28 @@ public class MainActivity extends Activity
 				if (position == menuIndex++)
 				{
 					final ProgressDialog pd = ProgressDialog.show(MainActivity.this, "", "努力运行中, 请稍后......");
-					miband.connect(new ActionCallback() {
+					miband.connect(new DeviceStateListener() {
 						
 						@Override
-						public void onSuccess(Object data)
+						public void onConnectionStateChange(int status, int newState)
 						{
 							pd.dismiss();
 							Log.d(TAG,
-									"连接成功");
+									"onConnectionStateChange, status:" + status + ",newState:" + newState);
 						}
 						
 						@Override
-						public void onFail(int errorCode, String msg)
+						public void onServicesDiscovered(int status)
 						{
 							pd.dismiss();
-							Log.d(TAG, "connect fail, code:" + errorCode + ",mgs:" + msg);
+							Log.d(TAG, "onServicesDiscovered, status:" + status);
 						}
 					});
+				}
+				else if (position == menuIndex++)
+				{
+					miband.disconnect();
+					Log.d(TAG, "disconnected");
 				}
 				else if (position == menuIndex++)
 				{
