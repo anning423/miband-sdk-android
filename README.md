@@ -41,18 +41,18 @@ MiBand miband = new MiBand(context);
 
 // 连接, 会自动搜索android设备附近的手环, 自动连接
 // 因为手上只有一个手环, 当前只支持搜索到一个手环的情况;
-miband.connect(new ActionCallback() {
+miband.connect(new DeviceStateListener() {
 						
 	@Override
-	public void onSuccess(Object data)
+	public void onConnectionStateChange(int status, int newState)
 	{
-		Log.d(TAG,"connect success");
+		Log.d(TAG, "onConnectionStateChange, status:" + status + ",newState:" + newState);
 	}
 	
 	@Override
-	public void onFail(int errorCode, String msg)
+	public void onServicesDiscovered(int status)
 	{
-		Log.d(TAG,"connect fail, code:"+errorCode+",mgs:"+msg);
+		Log.d(TAG, "onServicesDiscovered, status:" + status);
 	}
 });
 
