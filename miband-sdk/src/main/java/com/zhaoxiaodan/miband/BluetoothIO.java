@@ -105,7 +105,7 @@ class BluetoothIO extends BluetoothGattCallback
 		item.setCharacteristic(uuid);
 		item.setData(value);
 		item.setCallback(callback);
-		LogUtil.d(TAG, "writeCharacteristic: item=%s", item.getSeq());
+		LogUtil.d(TAG, "writeCharacteristic: item=%s", item);
 		actionQueue.add(item);
 		dispatchActionQueue();
 	}
@@ -338,7 +338,7 @@ class BluetoothIO extends BluetoothGattCallback
 
 	private synchronized void cancelActionQueue()
 	{
-		LogUtil.d(TAG, "cancelActionQueue: size=%d" + actionQueue.size());
+		LogUtil.d(TAG, "cancelActionQueue: size=%d", actionQueue.size());
 		ActionQueueItem item = null;
 		while ((item = actionQueue.peek()) != null) {
 			onFail(item, -1, "cancelled, item=" + item);
